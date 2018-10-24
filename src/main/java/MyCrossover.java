@@ -1,8 +1,6 @@
 import org.uncommons.watchmaker.framework.operators.AbstractCrossover;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class MyCrossover extends AbstractCrossover<double[]> {
     protected MyCrossover() {
@@ -19,22 +17,24 @@ public class MyCrossover extends AbstractCrossover<double[]> {
         double[] child1 = new double[p1.length];
         double[] child2 = new double[p1.length];
 
+        double crossoverFactor = 0.5;
+        int crossoverNumber = random.nextInt(p1.length/10);
+        Set<Integer> genesCrossover = new HashSet<Integer>();
+        while (genesCrossover.size() < crossoverNumber)
+            genesCrossover.add(random.nextInt(p1.length));
 
-        double mutationFactor = 0.5;
-        int mutationNumber = random.nextInt(p1.length);
         for (int j = 0; j < p1.length; j++)
         {
-            if (j < mutationNumber)
+            if (genesCrossover.contains(j))
+            {
+                child1[j] = (crossoverFactor * p1[j]) + ( (1 - crossoverFactor) * p2[j]) ;
+                child2[j] = (crossoverFactor * p2[j]) + ( (1 - crossoverFactor) * p1[j]) ;
+            }
+            else
             {
                 child1[j] = p1[j];
                 child2[j] = p2[j];
             }
-            else
-            {
-                child1[j] = (mutationFactor * p1[j]) + ( (1 - mutationFactor) * p2[j]) ;
-                child2[j] = (mutationFactor * p2[j]) + ( (1 - mutationFactor) * p1[j]) ;
-            }
-
         }
 
         children.add(child1);

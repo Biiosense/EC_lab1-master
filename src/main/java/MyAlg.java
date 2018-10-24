@@ -33,9 +33,8 @@ public class MyAlg {
         algorithm.addEvolutionObserver(new EvolutionObserver() {
             public void populationUpdate(PopulationData populationData) {
                 double bestFit = populationData.getBestCandidateFitness();
-                System.out.println("Generation " + populationData.getGenerationNumber() + ": " + bestFit);
-                System.out.println("\tBest solution = " + Arrays.toString((double[])populationData.getBestCandidate()));
-                System.out.println("\tPop size = " + populationData.getPopulationSize());
+                if (populationData.getGenerationNumber()%99 == 0)
+                    System.out.println("Generation " + populationData.getGenerationNumber() + ": " + bestFit);
             }
         });
 

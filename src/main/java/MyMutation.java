@@ -16,28 +16,26 @@ public class MyMutation implements EvolutionaryOperator<double[]> {
         // your implementation:
 
         for (double[] individual : population) {
-            if (random.nextDouble() < 0.5)
-            {
-                for (int i = 0; i < individual.length; i++) {
+            for (int i = 0; i < individual.length; i++) {
 
-                    if (random.nextDouble() < 0.01)
-                    {
-                        double gauss = random.nextGaussian() * rate;
+                if (random.nextDouble() < 0.005) {
 
-                        if (individual[i] > 5)
-                            individual[i] = 5;
-                        else if (individual[i] < -5)
-                            individual[i] = -5;
-                    }
+                    double mutation_factor = 5 * random.nextDouble() * rate;
+                    if (random.nextDouble() < 0.5)
+                        individual[i] = mutation_factor;
+                    else
+                        individual[i] = -mutation_factor;
+
+                    if (individual[i] > 5)
+                        individual[i] = 5;
+                    else if (individual[i] < -5)
+                        individual[i] = -5;
                 }
             }
         }
         generations++;
-        double mini = 0.2;
-        rate = mini + Math.exp(- Math.pow(generations/10000.0, 2));
-        System.out.println(rate);
+        rate = 0.001 + Math.exp(- (generations/5000.0));
 
-        //result population
         return population;
     }
 }
